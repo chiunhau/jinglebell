@@ -1,0 +1,10 @@
+{
+  "applications": {
+    "_default": {
+      "link": "jinglebell"
+    },
+    "jinglebell": {
+      "applicationId": "W9zbmrXIFkaWqfnaqo8XSvgM54ChA5EoIKa9iF5g"
+    }
+  }
+}

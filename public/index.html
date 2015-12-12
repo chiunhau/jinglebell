@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>2015 Jingle Party</title>
+  <style type="text/css">
+    body {
+      font-family: 'Heiti TC', 'Microsoft JhengHei';
+      margin: 0;
+      background: url('images/bg.png') no-repeat center center;
+      -webkit-background-size: cover;  
+      -moz-background-size: cover;  
+      -o-background-size: cover;  
+      background-size: cover;
+    }
+    .container {
+      text-align: center;
+
+    }
+    .canvas-container {
+      padding: 0;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    #download {
+      border-style: none;
+      padding: 10px;
+      background-color: #fff;
+      color: #333;
+      border-radius: 5px;
+      font-size: 16px;
+      letter-spacing: 1px;
+    }
+    #login {
+      border-style: none;
+      padding: 10px;
+      background-color: #08f;
+      color: white;
+      border-radius: 5px;
+      font-size: 16px;
+      letter-spacing: 1px;
+    }
+    h2 {
+
+    }
+    button {
+      margin: 6px;
+      margin-bottom: 15px;
+    }
+    a:link, a:visited, a:hover, a:active {
+      color: yellow;
+      text-decoration: none;
+
+    }
+    p {
+      color: #fff;
+      line-height: 1.5em;
+      font-size: 1em;
+    }
+    .head {
+      width: 350px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    @media screen and (max-width: 400px) {
+      .head {
+        width: 250px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img class="head" src="images/head.png" />
+    <button id="login">臉書登入</button>
+    <a id="download" href="#">下載頭像</a>
+    <p>先使用臉書登入後，<br/>點擊並拖移紅色鼻子至理想位置！<br/>也可拖拉白色方框來縮放。<br/>不想要鼻子的話就把他拖到頭貼以外之處就好。<br/>（推薦使用電腦版以享受最佳體驗）</p>
+    
+    <canvas id="c" width="400" height="400"></canvas>
+    <p style="margin-top:50px">草草完成，品質不佳。<br/>如遇Bug就重新整理幾次吧。<br/>歡迎回報問題Orz<br/>Built with great love by <a href="https://www.facebook.com/chiunhauyou">宭鎬</a></p>
+    
+
+    
+  </div>
+  
+  <script type="text/javascript" src="javascripts/fabric.js"></script>
+  <script type="text/javascript">
+    
+    //Facebook things
+
+    function statusChangeCallback(response) {
+      console.log('statusChangeCallback');
+      console.log(response);
+      if (response.status === 'connected') {
+        // Logged into your app and Facebook.
+        testAPI();
+      } else if (response.status === 'not_authorized') {
+        // The person is logged into Facebook, but not your app.
+        document.getElementById('status').innerHTML = 'Please log ' +
+          'into this app.';
+      } else {
+        // The person is not logged into Facebook, so we're not sure if
+        // they are logged into this app or not.
+        document.getElementById('status').innerHTML = 'Please log ' +
+          'into Facebook.';
+      }
+    }
+
+    function checkLoginState() {
+      FB.getLoginStatus(function(response) {
+        statusChangeCallback(response);
+      });
+    }
+    function login() {
+      FB.login(function(response) {
+        if (response.status === 'connected') {
+          checkLoginState()
+        } else if (response.status === 'not_authorized') {
+          // The person is logged into Facebook, but not your app.
+        } else {
+          // The person is not logged into Facebook, so we're not sure if
+          // they are logged into this app or not.
+        }
+      }, {scope: 'public_profile'});
+    }
+    function testAPI() {
+      console.log('Welcome!  Fetching your information.... ');
+      FB.api('/me/picture?width=400&height=400', function(response) {
+        console.log(response.data.url);
+        startCanvas(response.data.url);
+      });
+    }
+
+    function loadImage(src, onload) {
+      var img = new Image();
+      img.onload = onload;
+      img.setAttribute('crossOrigin', 'anonymous');
+      img.src = src;
+
+      return img;
+    }
+
+    
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId      : '546730998810630',
+        xfbml      : true,
+        version    : 'v2.5'
+      });
+
+      FB.getLoginStatus(function(response) {
+        statusChangeCallback(response);
+      });
+    };
+
+    function startCanvas(imgURL) {
+      var canvas = new fabric.Canvas('c');
+      fabric.Image.fromURL(imgURL, function(oImg) {
+        canvas.add(oImg);
+        fabric.Image.fromURL('images/filter.png', function(fImg) {
+          canvas.add(fImg);
+          var circle = new fabric.Circle({
+            left: 180,
+            top: 180,
+            radius: 25,
+            fill: 'rgb(233, 75, 70)',
+            lockUniScaling: true,
+            lockRotation: true,
+            stroke: 'white',
+            strokeWidth: 4,
+            cornerColor: '#fff'
+          });
+          canvas.add(circle);
+        },  { lockMovementX: true, lockMovementY: true , width: 400, height: 400, crossOrigin: 'anonymous'})
+        
+        
+      }, { lockMovementX: true, lockMovementY: true , width: 400, height: 400, crossOrigin: 'anonymous'});
+      
+      function downloadImage(link, canvasId, filename) {
+        link.href = document.getElementById('myCanvas').toDataURL();
+        link.download =filename;
+      }
+
+      document.getElementById('download').addEventListener('click', function() {
+        canvas.deactivateAll().renderAll();  
+        // // window.open(canvas.toDataURL('png'));
+        // // downloadImage(this, 'myCanvas', 'PrayForSyria.png');
+        this.href = canvas.toDataURL('png');
+        this.download = 'JingleAllTheWay.png';
+      });
+    }
+
+    document.getElementById('login').addEventListener('click', function() {
+      login();
+    })
+    
+    (function(d, s, id){
+       var js, fjs = d.getElementsByTagName(s)[0];
+       if (d.getElementById(id)) {return;}
+       js = d.createElement(s); js.id = id;
+       js.src = "//connect.facebook.net/en_US/sdk.js";
+       fjs.parentNode.insertBefore(js, fjs);
+     }(document, 'script', 'facebook-jssdk'));
+  </script>
+</body>
+</html>
