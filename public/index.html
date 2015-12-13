@@ -4,7 +4,9 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>2015 Jingle Party</title>
+  <meta property="og:image" content="http://jinglebell.parseapp.com/images/ogimage.png"/>
+  <meta property="og:description" content="在這個寒冷的季節裡，將頭貼換上一個小丑鼻子暖暖身子吧！" />
+  <title>紅色狂想。2015台科大設計系音樂派對</title>
   <style type="text/css">
     body {
       font-family: 'Heiti TC', 'Microsoft JhengHei';
@@ -64,15 +66,31 @@
       display: block;
       margin-left: auto;
       margin-right: auto;
+      margin-bottom: 20px;
     }
+    .canvas-container {
+      box-shadow: 5px 5px 10px rgba(0,0,0, 0.5);
+    }
+
     @media screen and (max-width: 400px) {
       .head {
         width: 250px;
       }
     }
   </style>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-41951304-9', 'auto');
+    ga('send', 'pageview');
+
+  </script>
 </head>
 <body>
+
   <div class="container">
     <img class="head" src="images/head.png" />
     <button id="login">臉書登入</button>
@@ -80,7 +98,7 @@
     <p>先使用臉書登入後，<br/>點擊並拖移紅色鼻子至理想位置！<br/>也可拖拉白色方框來縮放。<br/>不想要鼻子的話就把他拖到頭貼以外之處就好。<br/>（推薦使用電腦版以享受最佳體驗）</p>
     
     <canvas id="c" width="400" height="400"></canvas>
-    <p style="margin-top:50px">草草完成，品質不佳。<br/>如遇Bug就重新整理幾次吧。<br/>歡迎回報問題Orz<br/>Built with great love by <a href="https://www.facebook.com/chiunhauyou">宭鎬</a></p>
+    <p style="margin-top:50px">草草完成，品質不佳。<br/>如遇Bug就重新整理幾次吧。<br/>歡迎回報問題Orz<br/>Built with great love by <a class="behance"href="https://www.facebook.com/chiunhauyou">宭鎬</a></p>
     
 
     
@@ -170,7 +188,7 @@
             lockUniScaling: true,
             lockRotation: true,
             stroke: 'white',
-            strokeWidth: 4,
+            strokeWidth: 3,
             cornerColor: '#fff'
           });
           canvas.add(circle);
