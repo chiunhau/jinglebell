@@ -12,9 +12,9 @@
       font-family: 'Heiti TC', 'Microsoft JhengHei';
       margin: 0;
       background: url('images/bg.png') no-repeat center center;
-      -webkit-background-size: cover;  
-      -moz-background-size: cover;  
-      -o-background-size: cover;  
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
       background-size: cover;
     }
     .container {
@@ -96,17 +96,17 @@
     <button id="login">臉書登入</button>
     <a id="download" href="#">下載頭像</a>
     <p>先使用臉書登入後，<br/>點擊並拖移紅色鼻子至理想位置！<br/>也可拖拉白色方框來縮放。<br/>不想要鼻子的話就把他拖到頭貼以外之處就好。<br/>（推薦使用電腦版以享受最佳體驗）</p>
-    
+
     <canvas id="c" width="400" height="400"></canvas>
     <p style="margin-top:50px">草草完成，品質不佳。<br/>如遇Bug就重新整理幾次吧。<br/>歡迎回報問題Orz<br/>Built with great love by <a class="behance"href="https://www.facebook.com/chiunhauyou">宭鎬</a></p>
-    
 
-    
+
+
   </div>
-  
+
   <script type="text/javascript" src="javascripts/fabric.js"></script>
   <script type="text/javascript">
-    
+
     //Facebook things
 
     function statusChangeCallback(response) {
@@ -161,12 +161,12 @@
       return img;
     }
 
-    
+
     window.fbAsyncInit = function() {
       FB.init({
-        appId      : '546730998810630',
+        appId      : '1925099731055526',
         xfbml      : true,
-        version    : 'v2.5'
+        version    : 'v2.8'
       });
 
       FB.getLoginStatus(function(response) {
@@ -193,17 +193,17 @@
           });
           canvas.add(circle);
         },  { lockMovementX: true, lockMovementY: true , width: 400, height: 400, crossOrigin: 'anonymous'})
-        
-        
+
+
       }, { lockMovementX: true, lockMovementY: true , width: 400, height: 400, crossOrigin: 'anonymous'});
-      
+
       function downloadImage(link, canvasId, filename) {
         link.href = document.getElementById('myCanvas').toDataURL();
         link.download =filename;
       }
 
       document.getElementById('download').addEventListener('click', function() {
-        canvas.deactivateAll().renderAll();  
+        canvas.deactivateAll().renderAll();
         // // window.open(canvas.toDataURL('png'));
         // // downloadImage(this, 'myCanvas', 'PrayForSyria.png');
         this.href = canvas.toDataURL('png');
@@ -214,7 +214,7 @@
     document.getElementById('login').addEventListener('click', function() {
       login();
     })
-    
+
     (function(d, s, id){
        var js, fjs = d.getElementsByTagName(s)[0];
        if (d.getElementById(id)) {return;}
